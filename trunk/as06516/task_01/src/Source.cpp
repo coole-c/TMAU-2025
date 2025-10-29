@@ -54,10 +54,6 @@ int main()
     for (std::size_t i = 0; i < n; ++i) {
         if (i < 5) {
             u[i] = 0.0;
-        }
-        else {
-            u[i] = 10.0;            // step input
-        }
     }
 
     // --- Output vectors ---
