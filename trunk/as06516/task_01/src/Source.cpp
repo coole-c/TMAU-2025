@@ -24,12 +24,10 @@ void simulateNonlinear(double a, double b_non, double c, double d,
 
 
     if (n > 1) {
-        double y_tm1 = y_out[0];     // y[t-1] for t=0 (taken as y[0])
-        double u_tm1 = u[0];         // u[t-1] for t=0 (taken as u[0])
         y_out[1] = a * y_out[0]
-            - b_non * (y_tm1 * y_tm1)
+            - b_non * (y_out[0] * y_out[0])
             + c * u[0]
-            + d * std::sin(u_tm1);
+            + d * std::sin(u[0]);
     }
 
     // for t >= 1 compute normally y[t+1]
