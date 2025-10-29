@@ -46,14 +46,14 @@ void simulateNonlinear(double a, double b_non, double c, double d,
 
 int main()
 {
-    const std::size_t n = 20; // number of discrete time moments (tau = 0..n-1)
+    const std::size_t n = 20; // число дискретных моментов времени
 
-    // --- Input signal u(t) defined in code ---
-    // Example: step heating: zero first 5 steps, then constant heating 10.
+    // --- Input signal u(t) ---
     std::vector<double> u(n, 0.0);
     for (std::size_t i = 0; i < n; ++i) {
-        if (i < 5) {
-            u[i] = 0.0;
+        if (i >= 5) {
+            u[i] = 10.0; // шаговое управление после 5-го шага
+        }
     }
 
     // --- Output vectors ---
@@ -61,17 +61,16 @@ int main()
     std::vector<double> y_nonlinear(n, 0.0);
 
     // --- Initial conditions ---
-    const double Y0 = 20.0; // initial temperature (and room temperature if needed)
+    const double Y0 = 20.0; // начальная температура
     y_linear[0] = Y0;
     y_nonlinear[0] = Y0;
 
-    // --- Model parameters (chosen to be physically plausible & stable) ---
-    // 'a' close to 1 but less than 1 => some heat retention but stable
+    // --- Model parameters ---
     const double a = 0.92;
-    const double b_lin = 0.08;  // linear input gain (for eq. 2)
-    const double b_non = 0.005; // nonlinear squared-term coeff (keeps nonlinear term small)
-    const double c = 0.07;  // input gain in nonlinear equation
-    const double d = 0.04;  // amplitude of sin(u[t-1]) term
+    const double b_lin = 0.08;
+    const double b_non = 0.005;
+    const double c = 0.07;
+    const double d = 0.04;
 
     // Run simulations
     simulateLinear(a, b_lin, u, y_linear);
@@ -83,9 +82,9 @@ int main()
     std::cout << "----------------------------------------------------" << std::endl;
     for (std::size_t t = 0; t < n; ++t) {
         std::cout << std::setw(2) << t << "  \t"
-            << std::setw(7) << u[t] << "  \t"
-            << std::setw(9) << y_linear[t] << "  \t"
-            << std::setw(11) << y_nonlinear[t] << "\n";
+                  << std::setw(7) << u[t] << "  \t"
+                  << std::setw(9) << y_linear[t] << "  \t"
+                  << std::setw(11) << y_nonlinear[t] << "\n";
     }
 
     return 0;
