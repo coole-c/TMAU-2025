@@ -55,12 +55,8 @@ int main()
         if (i < 5) {
             u[i] = 0.0;
         }
-        else if (i < 25) {
-            u[i] = 10.0;            // step input
-        }
         else {
-            // small oscillation later to show nonlinear sin term effect
-            u[i] = 10.0 + 2.0 * std::sin(static_cast<double>(i) * 0.3);
+            u[i] = 10.0;            // step input
         }
     }
 
