@@ -22,7 +22,7 @@ void simulateNonlinear(double a, double b_non, double c, double d,
     const std::size_t n = u.size();
     if (n == 0) return;
 
-    // handle t=0: use y[-1] = y[0] and u[-1] = u[0]
+
     if (n > 1) {
         double y_tm1 = y_out[0];     // y[t-1] for t=0 (taken as y[0])
         double u_tm1 = u[0];         // u[t-1] for t=0 (taken as u[0])
