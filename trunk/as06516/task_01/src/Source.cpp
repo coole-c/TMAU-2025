@@ -50,7 +50,7 @@ int main()
     std::vector<double> u(n, 0.0);
     for (std::size_t i = 0; i < n; ++i) {
         if (i >= 5) {
-            u[i] = 10.0; // шаговое управление после 5-го шага
+            u[i] = 10.0; // step control after the 5th step
         }
     }
 
