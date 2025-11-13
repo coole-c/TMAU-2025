@@ -46,7 +46,7 @@ const double b_non = 0.005;
 const double c = 0.07; 
 const double d = 0.04;
 
-vector<double> u(n, 0.0);
+std::vector<double> u(n, 0.0);
 ```
 Имея данные параметры получим результат работы программы:
 ```bash
