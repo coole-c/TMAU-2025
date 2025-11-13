@@ -44,7 +44,7 @@ void simulateNonlinear(double a, double b_non, double c, double d,
 
 int main()
 {
-    const std::size_t n = 20; // число дискретных моментов времени
+    const std::size_t n = 20; // number of discrete time steps
 
     // --- Input signal u(t) ---
     std::vector<double> u(n, 0.0);
