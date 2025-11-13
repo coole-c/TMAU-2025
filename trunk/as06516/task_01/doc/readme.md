@@ -39,7 +39,7 @@ Task is to write program (**С++**), which simulates this object temperature.
 ## Выполнение работы
 Константы  
 ```
-const int n = 20; 
+const std::size_t n = 20; 
 const double a = 0.92;
 const double b_lin = 0.08;  
 const double b_non = 0.005; 
