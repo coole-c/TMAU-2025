@@ -55,7 +55,7 @@ int main()
     y_nonlinear[0] = Y0;
     
     const double a = 0.92;
-    const double b_lin = 0.08;      // локальная переменная
+    const double b_lin = 0.08;
     const double b_non = 0.005;
     const double c = 0.07;
     const double d = 0.04;
