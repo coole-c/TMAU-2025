@@ -2,6 +2,7 @@
 #include "functions.h"
 #include <cmath>
 
+
 TEST(LinearModel, BasicCalculation) {
     EXPECT_DOUBLE_EQ(linear(10.0, 5.0), 0.92 * 10.0 + 0.08 * 5.0);
 }
@@ -11,15 +12,15 @@ TEST(LinearModel, ZeroInputs) {
 }
 
 TEST(LinearModel, OnlyState) {
-    EXPECT_DOUBLE_EQ(linear(15.5, 0.0), 0.92 * 15.5);  
+    EXPECT_DOUBLE_EQ(linear(15.5, 0.0), a * 15.5);
 }
 
 TEST(LinearModel, OnlyInput) {
-    EXPECT_DOUBLE_EQ(linear(0.0, 8.3), 0.08 * 8.3); 
+    EXPECT_DOUBLE_EQ(linear(0.0, 8.3), b * 8.3);
 }
 
 TEST(LinearModel, NegativeValues) {
-    EXPECT_DOUBLE_EQ(linear(-5.0, -3.0), 0.92 * (-5.0) + 0.08 * (-3.0));  
+    EXPECT_DOUBLE_EQ(linear(-5.0, -3.0), a * (-5.0) + b * (-3.0));
 }
 
 TEST(LinearModel, FractionalValues) {
@@ -28,9 +29,10 @@ TEST(LinearModel, FractionalValues) {
     EXPECT_NEAR(result, expected, 1e-12);
 }
 
+
 TEST(NonlinearModel, BasicCalculation) {
     double result = nonlinear(12.0, 8.0, 6.0, 4.0);
-    double expected = 0.92 * 12.0 - 0.005 * 8.0 * 8.0 + 0.07 * 6.0 + 0.04 * std::sin(4.0);  
+    double expected = a * 12.0 - b * 8.0 * 8.0 + c * 6.0 + d * sin(4.0);
     EXPECT_DOUBLE_EQ(result, expected);
 }
 
@@ -39,31 +41,49 @@ TEST(NonlinearModel, AllZeros) {
 }
 
 TEST(NonlinearModel, OnlyCurrentState) {
-    EXPECT_DOUBLE_EQ(nonlinear(9.5, 0.0, 0.0, 0.0), 0.92 * 9.5); 
+    EXPECT_DOUBLE_EQ(nonlinear(9.5, 0.0, 0.0, 0.0), a * 9.5);
 }
 
 TEST(NonlinearModel, OnlyPreviousState) {
-    EXPECT_DOUBLE_EQ(nonlinear(0.0, 7.2, 0.0, 0.0), -0.005 * 7.2 * 7.2);  
+    EXPECT_DOUBLE_EQ(nonlinear(0.0, 7.2, 0.0, 0.0), -b * 7.2 * 7.2);
+}
 
 TEST(NonlinearModel, OnlyInputs) {
     double result = nonlinear(0.0, 0.0, 3.0, 1.57);
-    double expected = 0.07 * 3.0 + 0.04 * std::sin(1.57);  
+    double expected = c * 3.0 + d * sin(1.57);
     EXPECT_NEAR(result, expected, 1e-12);
 }
 
 TEST(NonlinearModel, NegativeInputs) {
-    double result = nonlinear(4.0, 2.0, 3.0, 1.0);
-    double expected = 0.92 * 4.0 - 0.005 * 2.0 * 2.0 + 0.07 * 3.0 + 0.04 * std::sin(1.0);  
+    double result = nonlinear(4.0, 2.0, -3.0, -1.0);
+    double expected = a * 4.0 - b * 2.0 * 2.0 + c * (-3.0) + d * sin(-1.0);
     EXPECT_DOUBLE_EQ(result, expected);
 }
 
 TEST(NonlinearModel, HighPrecision) {
-    double yt = 1.234567;
-    double yt1 = 9.876543;
-    double ut = 2.718281;
-    double ut1 = 3.141592;
-    
+    double yt = 1.234567, yt1 = 9.876543, ut = 2.718281, ut1 = 3.141592;
     double result = nonlinear(yt, yt1, ut, ut1);
-    double expected = 0.92 * yt - 0.005 * yt1 * yt1 + 0.07 * ut + 0.04 * std::sin(ut1);  
+    double expected = a * yt - b * yt1 * yt1 + c * ut + d * sin(ut1);
     EXPECT_NEAR(result, expected, 1e-10);
+}
+
+
+TEST(SystemParameters, ValidRanges) {
+    EXPECT_GT(a, 0.0);
+    EXPECT_LT(a, 1.0);
+    EXPECT_GT(b, 0.0);
+    EXPECT_GT(c, 0.0);
+    EXPECT_GT(d, 0.0);
+}
+
+TEST(ModelsComparison, DifferentResults) {
+    double yt = 10.0, ut = 5.0;
+    double linear_result = linear(yt, ut);
+    double nonlinear_result = nonlinear(yt, yt, ut, ut);
+    EXPECT_NE(linear_result, nonlinear_result);
+}
+
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
