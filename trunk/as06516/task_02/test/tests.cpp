@@ -2,8 +2,6 @@
 #include "functions.h"
 #include <cmath>
 
-// ==================== ÎÑÍÎÂÍÛÅ ÒÅÑÒÛ ËÈÍÅÉÍÎÉ ÔÓÍÊÖÈÈ ====================
-
 TEST(LinearModel, BasicCalculation) {
     EXPECT_DOUBLE_EQ(linear(10.0, 5.0), 0.92 * 10.0 + 0.08 * 5.0);
 }
@@ -30,7 +28,6 @@ TEST(LinearModel, FractionalValues) {
     EXPECT_NEAR(result, expected, 1e-12);
 }
 
-// ==================== ÎÑÍÎÂÍÛÅ ÒÅÑÒÛ ÍÅËÈÍÅÉÍÎÉ ÔÓÍÊÖÈÈ ====================
 
 TEST(NonlinearModel, BasicCalculation) {
     double result = nonlinear(12.0, 8.0, 6.0, 4.0);
@@ -69,7 +66,6 @@ TEST(NonlinearModel, HighPrecision) {
     EXPECT_NEAR(result, expected, 1e-10);
 }
 
-// ==================== ÑÏÅÖÈÀËÜÍÛÅ ÒÅÑÒÛ ====================
 
 TEST(SystemParameters, ValidRanges) {
     EXPECT_GT(a, 0.0);
