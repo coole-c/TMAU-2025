@@ -2,7 +2,7 @@
 #include "functions.h"
 #include <cmath>
 
-// ==================== Œ—ÕŒ¬Õ€≈ “≈—“€ À»Õ≈…ÕŒ… ‘”Õ ÷»» ====================
+// ==================== √é√ë√ç√é√Ç√ç√õ√Ö √í√Ö√ë√í√õ √ã√à√ç√Ö√â√ç√é√â √î√ì√ç√ä√ñ√à√à ====================
 
 TEST(LinearModel, BasicCalculation) {
     EXPECT_DOUBLE_EQ(linear(10.0, 5.0), 0.92 * 10.0 + 0.08 * 5.0);
@@ -13,7 +13,7 @@ TEST(LinearModel, ZeroInputs) {
 }
 
 TEST(LinearModel, OnlyState) {
-    EXPECT_DOUBLE_EQ(linear(15.5, 0.0), a * 0.0);
+    EXPECT_DOUBLE_EQ(linear(15.5, 0.0), a * 15.5);
 }
 
 TEST(LinearModel, OnlyInput) {
@@ -21,7 +21,7 @@ TEST(LinearModel, OnlyInput) {
 }
 
 TEST(LinearModel, NegativeValues) {
-    EXPECT_DOUBLE_EQ(linear(5.0, 3.0), a * (-5.0) + b * (-3.0));
+    EXPECT_DOUBLE_EQ(linear(5.0, 3.0), a * (5.0) + b * (3.0));
 }
 
 TEST(LinearModel, FractionalValues) {
@@ -30,7 +30,7 @@ TEST(LinearModel, FractionalValues) {
     EXPECT_NEAR(result, expected, 1e-12);
 }
 
-// ==================== Œ—ÕŒ¬Õ€≈ “≈—“€ Õ≈À»Õ≈…ÕŒ… ‘”Õ ÷»» ====================
+// ==================== √é√ë√ç√é√Ç√ç√õ√Ö √í√Ö√ë√í√õ √ç√Ö√ã√à√ç√Ö√â√ç√é√â √î√ì√ç√ä√ñ√à√à ====================
 
 TEST(NonlinearModel, BasicCalculation) {
     double result = nonlinear(12.0, 8.0, 6.0, 4.0);
@@ -58,7 +58,7 @@ TEST(NonlinearModel, OnlyInputs) {
 
 TEST(NonlinearModel, NegativeInputs) {
     double result = nonlinear(4.0, 2.0, 3.0, 1.0);
-    double expected = a * 4.0 - b * 2.0 * 2.0 + c * (-3.0) + d * sin(-1.0);
+    double expected = a * 4.0 - b * 2.0 * 2.0 + c * (3.0) + d * sin(1.0);
     EXPECT_DOUBLE_EQ(result, expected);
 }
 
@@ -69,7 +69,7 @@ TEST(NonlinearModel, HighPrecision) {
     EXPECT_NEAR(result, expected, 1e-10);
 }
 
-// ==================== —œ≈÷»¿À‹Õ€≈ “≈—“€ ====================
+// ==================== √ë√è√Ö√ñ√à√Ä√ã√ú√ç√õ√Ö √í√Ö√ë√í√õ ====================
 
 TEST(SystemParameters, ValidRanges) {
     EXPECT_GT(a, 0.0);
