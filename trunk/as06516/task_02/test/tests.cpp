@@ -2,13 +2,6 @@
 #include "functions.h"
 #include <cmath>
 
-// Константы, которые должны быть определены где-то (возможно в functions.h)
-const double a = 0.92;
-const double b_lin = 0.08;  // для линейной модели
-const double b_non = 0.005; // для нелинейной модели
-const double c = 0.07;
-const double d = 0.04;
-
 TEST(LinearModel, BasicCalculation) {
     EXPECT_DOUBLE_EQ(linear(10.0, 5.0), 0.92 * 10.0 + 0.08 * 5.0);
 }
